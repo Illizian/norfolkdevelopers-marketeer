@@ -1,0 +1,32 @@
+// Nova Tool CSS
+.field__emoji-wrapper {
+  position: relative;
+}
+
+.emoji-wrapper__toggle,
+.emoji-wrapper__picker {
+  position: absolute;
+}
+
+.emoji-wrapper__toggle {
+  top: 0;
+  right: 0;
+  padding: 4px;
+  font-size: 1.6em;
+  border-radius: 0;
+  border-top-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    background-color: var(--60);
+  }
+}
+
+.emoji-wrapper__picker {
+  top: 0;
+  left: 100%;
+  margin-left: 0.5rem;
+  z-index: 12;
+}
