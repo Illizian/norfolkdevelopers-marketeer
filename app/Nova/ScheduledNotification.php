@@ -45,6 +45,13 @@ class ScheduledNotification extends Resource
     }
 
     /**
+     * The default sort
+     *
+     * @var array
+     */
+    public static $orderBy = ['scheduled_at' => 'asc'];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -53,7 +60,7 @@ class ScheduledNotification extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id'),
 
             Select::make(__('Notification Type'), 'type')
                 ->options([
@@ -62,6 +69,7 @@ class ScheduledNotification extends Resource
                     'mail' => 'Email',
                 ])
                 ->displayUsingLabels()
+                ->sortable()
                 ->required(),
 
             Text::make(__('Destination'), 'destination')
@@ -75,10 +83,11 @@ class ScheduledNotification extends Resource
                 ->required(),
 
             Textarea::make(__('Message (Hydrated)'), 'hydratedMessage')
-                ->exceptOnForms()
+                ->onlyOnDetail()
                 ->alwaysShow(),
 
             DateTime::make(__('Schedule'), 'scheduled_at')
+                ->sortable()
                 ->required(),
 
             Boolean::make(__('Sent'), 'sent')
@@ -86,6 +95,7 @@ class ScheduledNotification extends Resource
                 ->hideWhenUpdating(),
 
             BelongsTo::make(__('Event'), 'event')
+                ->sortable()
                 ->nullable(),
         ];
     }

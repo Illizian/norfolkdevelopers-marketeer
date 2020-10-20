@@ -32,6 +32,13 @@ class Event extends Resource
     ];
 
     /**
+     * The default sort
+     *
+     * @var array
+     */
+    public static $orderBy = ['start_time' => 'asc'];
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,11 +53,13 @@ class Event extends Resource
                 ->required(),
 
             DateTime::make(__('Date and time'), 'start_time')
+                ->sortable()
                 ->required(),
 
             Number::make(__('Duration (seconds)'), 'duration')
                 ->onlyOnForms()
                 ->required(),
+
             Text::make(__('Duration'), 'duration_human')
                 ->exceptOnForms()
                 ->required(),
