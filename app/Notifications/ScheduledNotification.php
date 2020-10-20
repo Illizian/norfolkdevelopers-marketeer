@@ -38,10 +38,16 @@ class ScheduledNotification extends Notification
      */
     public function toMail(ScheduledNotificationModel $notifiable) : \Illuminate\Notifications\Messages\MailMessage
     {
-        return (new MailMessage)
-            ->greeting($notifiable->event->title)
-            ->line($notifiable->hydrated_message)
-            ->action('Read more & RSVP', $notifiable->event->rsvp_link);
+        $message = new MailMessage;
+
+        if ($notifiable->event) {
+            $message->greeting($notifiable->event->title);
+            $message->action('Read more & RSVP', $notifiable->event->rsvp_link);
+        }
+
+        $message->line($notifiable->hydrated_message);
+
+        return $message;
     }
 
     /**
