@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "illizian/nova-carbon-modifier": "*",
+        "illizian/nova-suggest-field": "*",
         "illizian/nova-tweet-field": "*",
         "laravel-notification-channels/discord": "^1.1",
         "laravel-notification-channels/twitter": "^5.0",
@@ -20,8 +21,7 @@
         "laravel/nova": "*",
         "laravel/tinker": "^2.0",
         "optimistdigital/nova-tailwind": "^1.0",
-        "illizian/NovaSuggestField": "*",
-        "illizian/nova-suggest-field": "*"
+        "sentry/sentry-laravel": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
