@@ -13,7 +13,7 @@ use NotificationChannels\Discord\DiscordChannel;
 use NotificationChannels\Discord\DiscordMessage;
 use NotificationChannels\Twitter\TwitterStatusUpdate;
 
-class ScheduledNotification extends Notification
+class ScheduledNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
