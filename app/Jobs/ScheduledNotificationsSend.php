@@ -10,11 +10,33 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 
 class ScheduledNotificationsSend implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The Collection of \App\Models\ScheduledNotification
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    protected $models;
+
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    function __construct(Collection $models = null)
+    {
+        if ($models) {
+            $this->models = $models;
+        } else {
+            $this->models = Model::unsent()->due()->get();
+        }
+    }
 
     /**
      * Execute the job.
@@ -23,14 +45,11 @@ class ScheduledNotificationsSend implements ShouldQueue
      */
     public function handle()
     {
-        Model::unsent()
-            ->due()
-            ->get()
-            ->each(function ($notification) {
-                $notification->notify(new ScheduledNotification);
-                $notification->sent = true;
-                $notification->save();
-            });
+        $this->models->each(function ($notification) {
+            $notification->notify(new ScheduledNotification);
+            $notification->sent = true;
+            $notification->save();
+        });
 
         return 0;
     }
