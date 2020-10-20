@@ -82,6 +82,20 @@ class ScheduledNotification extends Model
     }
 
     /**
+     * Get the Twitter Credentials required to make this
+     * TODO: This is a placeholder for if/when we need to support mutiple twitter accounts
+     */
+    // public function routeNotificationForTwitter()
+    // {
+    //    return [
+    //       'TWITTER_CONSUMER_KEY',
+    //       'TWITTER_CONSUMER_SECRET',
+    //       'TWITTER_ACCESS_TOKEN',
+    //       'TWITTER_ACCESS_SECRET',
+    //    ];
+    // }
+
+    /**
      * Get the Discord channel this Notification should be sent to
      */
     public function routeNotificationForDiscord()
