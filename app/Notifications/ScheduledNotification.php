@@ -67,9 +67,9 @@ class ScheduledNotification extends Notification implements ShouldQueue
      * Get the Twitter representation of the notification.
      *
      * @param  \App\Models\ScheduledNotification  $notifiable
-     * @return \NotificationChannels\Twitter\TwitterStatusUpdate
+     * @return \NotificationChannels\Twitter\TwitterStatusUpdate|TwitterDirectMessage
      */
-    public function toTwitter($notifiable) : \NotificationChannels\Twitter\TwitterStatusUpdate
+    public function toTwitter($notifiable)
     {
         if ($notifiable->destination) {
             return new TwitterDirectMessage($notifiable->destination, $notifiable->hydrated_message);
