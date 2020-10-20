@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\Discord\DiscordChannel;
 use NotificationChannels\Discord\DiscordMessage;
 use NotificationChannels\Twitter\TwitterStatusUpdate;
+use NotificationChannels\Twitter\TwitterDirectMessage;
 
 class ScheduledNotification extends Notification implements ShouldQueue
 {
