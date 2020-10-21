@@ -4,8 +4,8 @@ namespace App\Nova;
 use \App\Models\Event;
 use \App\Models\TemplateNotification as Model;
 
-use Illizian\NovaCarbonModifier\NovaCarbonModifier;
-use Illizian\NovaSuggestField\NovaSuggestField;
+use \Illizian\NovaCarbonModifier\NovaCarbonModifier;
+use \Illizian\NovaSuggestWrapper\NovaSuggestWrapper;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\{BelongsTo, ID, Select, Text, Textarea};
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -76,10 +76,13 @@ class TemplateNotification extends Resource
                 ->help('The channel, email, or account, this message should be delivered to.')
                 ->rules('required_if:type,' . DiscordChannel::class),
 
-            NovaSuggestField::make(__('Message'), 'message')
-                ->help('The message you wish to send. Type : to add values from event, e.g. :title')
-                ->suggestions(Event::$template_attributes)
-                ->required(),
+            NovaSuggestWrapper::make([
+
+                Textarea::make(__('Message'), 'message')
+                    ->help('The message you wish to send. Type : to add values from event, e.g. :title')
+                    ->required()
+
+            ])->suggestions(Event::$template_attributes),
 
             NovaCarbonModifier::make(__('Modifier'), 'modifier')
                 ->popular($popularModifiers)

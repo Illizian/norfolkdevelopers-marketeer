@@ -12,9 +12,8 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "illizian/nova-carbon-modifier": "*",
-        "illizian/nova-suggest-field": "*",
-        "illizian/nova-tweet-field": "*",
+        "illizian/nova-carbon-modifier-field": "^0.1.0",
+        "illizian/nova-suggest-field-container": "^0.1.0",
         "laravel-notification-channels/discord": "^1.1",
         "laravel-notification-channels/twitter": "^5.0",
         "laravel/framework": "^8.0",
@@ -34,22 +33,6 @@
         {
             "type": "path",
             "url": "./nova"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/NovaTweetField"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/NovaCarbonModifier"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/NovaSuggestField"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/NovaSuggestField"
         }
     ],
     "config": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa3c26ae891fb722f16f2ae01eaa810e",
+    "content-hash": "9b330c7f9653ce299a987f04d70d8d91",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -1540,12 +1540,18 @@
             "time": "2018-07-31T19:32:56+00:00"
         },
         {
-            "name": "illizian/nova-carbon-modifier",
-            "version": "dev-main",
+            "name": "illizian/nova-carbon-modifier-field",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Illizian/nova-carbon-modifier-field.git",
+                "reference": "510e3662ce52a3f31d1d0d9f88559ceabe63cacf"
+            },
             "dist": {
-                "type": "path",
-                "url": "./nova-components/NovaCarbonModifier",
-                "reference": "2155432a28013c2f9d67e270277a8a3f93d3993f"
+                "type": "zip",
+                "url": "https://api.github.com/repos/Illizian/nova-carbon-modifier-field/zipball/510e3662ce52a3f31d1d0d9f88559ceabe63cacf",
+                "reference": "510e3662ce52a3f31d1d0d9f88559ceabe63cacf",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0"
@@ -1563,25 +1569,30 @@
                     "Illizian\\NovaCarbonModifier\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "A Laravel Nova field.",
+            "description": "A field for allowing a User to configure a \"Carbon Modifier\"",
             "keywords": [
                 "laravel",
                 "nova"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2020-10-21T14:16:14+00:00"
         },
         {
-            "name": "illizian/nova-suggest-field",
-            "version": "dev-main",
+            "name": "illizian/nova-suggest-field-container",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Illizian/nova-suggest-field-container.git",
+                "reference": "7d81cb76b79a30f30cd4af49ad3d16d993452d16"
+            },
             "dist": {
-                "type": "path",
-                "url": "./nova-components/NovaSuggestField",
-                "reference": "21f950eae6c81489e115aa843b29b79da4b20270"
+                "type": "zip",
+                "url": "https://api.github.com/repos/Illizian/nova-suggest-field-container/zipball/7d81cb76b79a30f30cd4af49ad3d16d993452d16",
+                "reference": "7d81cb76b79a30f30cd4af49ad3d16d993452d16",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0"
@@ -1590,62 +1601,25 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Illizian\\NovaSuggestField\\FieldServiceProvider"
+                        "Illizian\\NovaSuggestWrapper\\FieldServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Illizian\\NovaSuggestField\\": "src/"
+                    "Illizian\\NovaSuggestWrapper\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "A Laravel Nova field.",
+            "description": "A Laravel Nova field container allowing Textarea's to contain typeahead suggestions",
             "keywords": [
                 "laravel",
                 "nova"
             ],
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "illizian/nova-tweet-field",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/NovaTweetField",
-                "reference": "d04b898a65b1635bc2d2b76c595d4d224d24f22d"
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Illizian\\NovaTweetField\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illizian\\NovaTweetField\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2020-10-21T13:22:11+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",

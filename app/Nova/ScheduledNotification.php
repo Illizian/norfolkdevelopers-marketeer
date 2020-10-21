@@ -4,7 +4,7 @@ namespace App\Nova;
 
 use \App\Models\Event;
 
-use \Illizian\NovaSuggestField\NovaSuggestField;
+use \Illizian\NovaSuggestWrapper\NovaSuggestWrapper;
 use \Illuminate\Http\Request;
 use \Laravel\Nova\Fields\{BelongsTo, Boolean, DateTime, Select, Text, Textarea, ID};
 use \Laravel\Nova\Http\Requests\NovaRequest;
@@ -76,11 +76,14 @@ class ScheduledNotification extends Resource
                 ->help('The channel, email, or account, this message should be delivered to.')
                 ->rules('required_if:type,' . DiscordChannel::class),
 
-            NovaSuggestField::make(__('Message'), 'message')
-                ->onlyOnForms()
-                ->help('The message you wish to send. Type : to add values from event, e.g. :title')
-                ->suggestions(Event::$template_attributes)
-                ->required(),
+            NovaSuggestWrapper::make([
+
+                Textarea::make(__('Message'), 'message')
+                    ->help('The message you wish to send. Type : to add values from event, e.g. :title')
+                    ->onlyOnForms()
+                    ->required()
+
+            ])->suggestions(Event::$template_attributes),
 
             Textarea::make(__('Message (Hydrated)'), 'hydratedMessage')
                 ->onlyOnDetail()
