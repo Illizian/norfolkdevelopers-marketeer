@@ -3,7 +3,7 @@
 namespace App\Nova;
 
 use \Illuminate\Http\Request;
-use \Laravel\Nova\Fields\{ID, Text, DateTime, Number, Markdown, HasMany};
+use \Laravel\Nova\Fields\{ID, Text, DateTime, Number, Markdown, HasMany, Timezone};
 use \Laravel\Nova\Http\Requests\NovaRequest;
 
 class Event extends Resource
@@ -62,6 +62,12 @@ class Event extends Resource
 
             Text::make(__('Duration'), 'duration_human')
                 ->exceptOnForms()
+                ->required(),
+
+            Timezone::make(__('Timezone'), 'timezone')
+                ->searchable()
+                ->default(config('app.timezone'))
+                ->help('Defaults to ' . config('app.timezone'))
                 ->required(),
 
             Markdown::make(__('Description'), 'description')

@@ -41,7 +41,7 @@ class Event extends Model
      */
     static $template_attributes = [
         "title", "start_time", "duration", "description", "rsvp_link", "created_at", "updated_at", "start_time_human",
-        "start_time_date", "start_time_time", "start_time_diff", "duration_human",
+        "start_time_date", "start_time_time", "start_time_diff", "duration_human", "timezone"
     ];
 
     /**
@@ -52,7 +52,7 @@ class Event extends Model
     public function getStartTimeHumanAttribute() : string
     {
         return $this->start_time
-            ->tz('Europe/London')
+            ->tz($this->timezone)
             ->format('D, j M, g:ia');
     }
 
@@ -64,7 +64,7 @@ class Event extends Model
     public function getStartTimeDateAttribute() : string
     {
         return $this->start_time
-            ->tz('Europe/London')
+            ->tz($this->timezone)
             ->format('D, j M');
     }
 
@@ -76,7 +76,7 @@ class Event extends Model
     public function getStartTimeTimeAttribute() : string
     {
         return $this->start_time
-            ->tz('Europe/London')
+            ->tz($this->timezone)
             ->format('g:ia');
     }
 
