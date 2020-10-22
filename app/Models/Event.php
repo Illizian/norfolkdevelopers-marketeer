@@ -51,7 +51,9 @@ class Event extends Model
      */
     public function getStartTimeHumanAttribute() : string
     {
-        return $this->start_time->format('D, j M, g:ia');
+        return $this->start_time
+            ->tz('Europe/London')
+            ->format('D, j M, g:ia');
     }
 
     /**
@@ -61,7 +63,9 @@ class Event extends Model
      */
     public function getStartTimeDateAttribute() : string
     {
-        return $this->start_time->format('D, j M');
+        return $this->start_time
+            ->tz('Europe/London')
+            ->format('D, j M');
     }
 
     /**
@@ -71,7 +75,9 @@ class Event extends Model
      */
     public function getStartTimeTimeAttribute() : string
     {
-        return $this->start_time->format('g:ia');
+        return $this->start_time
+            ->tz('Europe/London')
+            ->format('g:ia');
     }
 
     /**
