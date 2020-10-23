@@ -8,8 +8,10 @@ use \App\Traits\ProvidesTemplateVars;
 use \Carbon\Carbon;
 use \Carbon\CarbonInterface;
 use \Carbon\CarbonInterval;
+use \Carbon\CarbonTimeZone;
 use \Illuminate\Database\Eloquent\Factories\HasFactory;
 use \Illuminate\Database\Eloquent\Model;
+use \Illuminate\Support\Str;
 
 class Event extends Model
 {
@@ -31,7 +33,8 @@ class Event extends Model
      * @var array
      */
     protected $appends = [
-        'start_time_human', 'start_time_date', 'start_time_time', 'start_time_diff', 'duration_human',
+        'start_time_human', 'start_time_date', 'start_time_time', 'start_time_diff', 'duration_human', "timezone_abbr",
+        "timezone_offset"
     ];
 
     /**
@@ -41,7 +44,8 @@ class Event extends Model
      */
     static $template_attributes = [
         "title", "start_time", "duration", "description", "rsvp_link", "created_at", "updated_at", "start_time_human",
-        "start_time_date", "start_time_time", "start_time_diff", "duration_human", "timezone"
+        "start_time_date", "start_time_time", "start_time_diff", "duration_human", "timezone", "timezone_abbr",
+        "timezone_offset"
     ];
 
     /**
@@ -105,6 +109,30 @@ class Event extends Model
             ->forHumans();
     }
 
+    /**
+     * Retrieve a human friendly version of the timezone e.g UTC+1
+     *
+     * @return string
+     */
+    public function getTimezoneAbbrAttribute() : string
+    {
+        $abbr = CarbonTimeZone::create($this->timezone)->getAbbr($this->start_time);
+
+        return Str::upper($abbr);
+    }
+
+    /**
+     * Retrieve a human friendly version of the timezone e.g UTC+1
+     *
+     * @return string
+     */
+    public function getTimezoneOffsetAttribute() : string
+    {
+        $offset = CarbonTimeZone::create($this->timezone)->toOffsetName($this->start_time);
+
+        // Trim the +03:00 to +3, or, +11:00 to +11, but +11:30 remains
+        return "UTC" . str_replace('+0', '+', str_replace(':00', '', $offset));
+    }
     /**
      * Get the ScheduledNotifications associated with this Event
      */
