@@ -77,13 +77,12 @@ class ScheduledNotification extends Resource
                 ->rules('required_if:type,' . DiscordChannel::class),
 
             NovaSuggestWrapper::make([
-
                 Textarea::make(__('Message'), 'message')
                     ->help('The message you wish to send. Type : to add values from event, e.g. :title')
-                    ->onlyOnForms()
                     ->required()
-
-            ])->suggestions(Event::$template_attributes),
+            ])
+                ->onlyOnForms()
+                ->suggestions(Event::$template_attributes),
 
             Textarea::make(__('Message (Hydrated)'), 'hydratedMessage')
                 ->onlyOnDetail()
