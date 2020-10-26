@@ -147,6 +147,7 @@ class ScheduledNotification extends Resource
     {
         return [
             new Actions\SendNotification,
+            new Actions\MarkAsUnsent,
         ];
     }
 }
