@@ -6,6 +6,8 @@
 
         <title>{{ config('app.name') }}</title>
 
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
 
