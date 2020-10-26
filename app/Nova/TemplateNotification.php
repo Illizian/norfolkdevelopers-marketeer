@@ -4,6 +4,7 @@ namespace App\Nova;
 use \App\Models\Event;
 use \App\Models\TemplateNotification as Model;
 
+use \Illizian\NovaEmojiFieldContainer\NovaEmojiFieldContainer;
 use \Illizian\NovaCarbonModifier\NovaCarbonModifier;
 use \Illizian\NovaSuggestWrapper\NovaSuggestWrapper;
 use Illuminate\Http\Request;
@@ -77,11 +78,11 @@ class TemplateNotification extends Resource
                 ->rules('required_if:type,' . DiscordChannel::class),
 
             NovaSuggestWrapper::make([
-
-                Textarea::make(__('Message'), 'message')
-                    ->help('The message you wish to send. Type : to add values from event, e.g. :title')
-                    ->required()
-
+                NovaEmojiFieldContainer::make([
+                    Textarea::make(__('Message'), 'message')
+                        ->help('The message you wish to send. Type : to add values from event, e.g. :title')
+                        ->required()
+                ]),
             ])->suggestions(Event::$template_attributes),
 
             NovaCarbonModifier::make(__('Modifier'), 'modifier')

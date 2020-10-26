@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "illizian/nova-carbon-modifier-field": "^0.1.0",
+        "illizian/nova-emoji-field-container": "^0.1.0",
         "illizian/nova-suggest-field-container": "^0.1.0",
         "laravel-notification-channels/discord": "^1.1",
         "laravel-notification-channels/twitter": "^5.0",
