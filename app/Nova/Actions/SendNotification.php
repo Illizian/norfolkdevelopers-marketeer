@@ -3,7 +3,6 @@
 namespace App\Nova\Actions;
 
 use \App\Jobs\ScheduledNotificationsSend;
-use \App\Models\ScheduledNotification;
 
 use \Illuminate\Bus\Queueable;
 use \Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,7 +24,7 @@ class SendNotification extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        ScheduledNotificationsSend::dispatch($models);
+        $models->each([ScheduledNotificationsSend::class, 'dispatch']);
     }
 
     /**

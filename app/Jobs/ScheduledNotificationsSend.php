@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class ScheduledNotificationsSend implements ShouldQueue
@@ -18,24 +19,20 @@ class ScheduledNotificationsSend implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The Collection of \App\Models\ScheduledNotification
+     * The Collection of
      *
-     * @var \Illuminate\Support\Collection
+     * @var \App\Models\ScheduledNotification
      */
-    protected $models;
+    protected $model;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    function __construct(Collection $models = null)
+    function __construct(Model $model)
     {
-        if ($models) {
-            $this->models = $models;
-        } else {
-            $this->models = Model::unsent()->due()->get();
-        }
+        $this->model = $model;
     }
 
     /**
@@ -45,12 +42,16 @@ class ScheduledNotificationsSend implements ShouldQueue
      */
     public function handle()
     {
-        $this->models->each(function ($notification) {
-            $notification->notify(new ScheduledNotification);
-            $notification->sent = true;
-            $notification->save();
-        });
+        $this->model->notify(new ScheduledNotification);
 
         return 0;
+    }
+
+    public function failed(\Exception $e)
+    {
+        Log::error(Self::class . "::failed");
+
+        $this->model->status = 'failed';
+        $this->model->save();
     }
 }

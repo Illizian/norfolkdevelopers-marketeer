@@ -23,7 +23,7 @@ class MarkAsUnsent extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $models->each(function($notification) {
-            $notification->sent = false;
+            $notification->status = 'pending';
             $notification->save();
         });
     }

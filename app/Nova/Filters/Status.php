@@ -5,7 +5,7 @@ namespace App\Nova\Filters;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
 
-class Sent extends BooleanFilter
+class Status extends BooleanFilter
 {
     /**
      * Apply the filter to the given query.
@@ -17,7 +17,9 @@ class Sent extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('sent', $value['sent']);
+        // $value = [ 'pending' => true, 'sending' => false, 'sent' => false, 'failed' => true ]
+        // We use array_keys(array_filter), to convert $value into [ 'pending', 'failed' ]
+        return $query->whereIn('status', array_keys(array_filter($value)));
     }
 
     /**
@@ -29,7 +31,23 @@ class Sent extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'Is Sent' => 'sent',
+            "Pending" => "pending",
+            "Sending" => "sending",
+            "Sent" => "sent",
+            "Failed" => "failed",
+        ];
+    }
+
+    /**
+     * Set the default options for the filter.
+     *
+     * @return array|mixed
+     */
+    public function default()
+    {
+        return [
+            "pending" => true,
+            "sending" => true,
         ];
     }
 }

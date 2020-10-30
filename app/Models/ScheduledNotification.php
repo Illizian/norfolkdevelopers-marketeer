@@ -58,7 +58,7 @@ class ScheduledNotification extends Model
      */
     public function scopeUnsent(Builder $query) : Builder
     {
-        return $query->where('sent', 0);
+        return $query->where('status', 'pending');
     }
 
     /**

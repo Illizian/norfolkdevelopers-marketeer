@@ -7,7 +7,7 @@ use \App\Models\Event;
 use \Illizian\NovaEmojiFieldContainer\NovaEmojiFieldContainer;
 use \Illizian\NovaSuggestWrapper\NovaSuggestWrapper;
 use \Illuminate\Http\Request;
-use \Laravel\Nova\Fields\{BelongsTo, Boolean, DateTime, Select, Text, Textarea, ID};
+use \Laravel\Nova\Fields\{BelongsTo, DateTime, Select, Status, Text, Textarea, ID};
 use \Laravel\Nova\Http\Requests\NovaRequest;
 use \NotificationChannels\Discord\DiscordChannel;
 use \NotificationChannels\Twitter\TwitterChannel;
@@ -93,9 +93,10 @@ class ScheduledNotification extends Resource
                 ->sortable()
                 ->required(),
 
-            Boolean::make(__('Sent'), 'sent')
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+            Status::make(__('Status'), 'status')
+                ->loadingWhen(['sending'])
+                ->failedWhen(['failed'])
+                ->exceptOnForms(),
 
             BelongsTo::make(__('Event'), 'event')
                 ->sortable()
@@ -123,7 +124,7 @@ class ScheduledNotification extends Resource
     public function filters(Request $request)
     {
         return [
-            new Filters\Sent,
+            new Filters\Status,
         ];
     }
 
