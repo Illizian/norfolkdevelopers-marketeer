@@ -20,7 +20,6 @@
         "laravel/framework": "^8.0",
         "laravel/nova": "*",
         "laravel/tinker": "^2.0",
-        "optimistdigital/nova-tailwind": "^1.0",
         "sentry/sentry-laravel": "^2.1"
     },
     "require-dev": {
