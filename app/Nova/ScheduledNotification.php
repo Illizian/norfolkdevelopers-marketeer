@@ -82,7 +82,7 @@ class ScheduledNotification extends Resource
             ])->onlyOnForms()->suggestions(Event::$template_attributes),
 
             Textarea::make(__('Message (Hydrated)'), 'hydratedMessage')
-                ->onlyOnDetail()
+                ->exceptOnForms()
                 ->alwaysShow(),
 
             DateTime::make(__('Schedule'), 'scheduled_at')
