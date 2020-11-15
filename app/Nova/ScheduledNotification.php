@@ -64,11 +64,7 @@ class ScheduledNotification extends Resource
             ID::make(__('ID'), 'id'),
 
             Select::make(__('Notification Type'), 'type')
-                ->options([
-                    DiscordChannel::class => 'Discord',
-                    TwitterChannel::class => 'Twitter',
-                    'mail' => 'Email',
-                ])
+                ->options(\App\Models\ScheduledNotification::$typeEnumerable)
                 ->displayUsingLabels()
                 ->sortable()
                 ->required(),
