@@ -36,6 +36,17 @@ class ScheduledNotification extends Model
     ];
 
     /**
+     * The possible options for the type column
+     *
+     * @var array
+     */
+    public static $typeEnumerable = [
+        DiscordChannel::class => 'Discord',
+        TwitterChannel::class => 'Twitter',
+        'mail' => 'Email',
+    ];
+
+    /**
      * Retrieve a hydrated version of the message, with
      * fields from the event interpolated
      *
