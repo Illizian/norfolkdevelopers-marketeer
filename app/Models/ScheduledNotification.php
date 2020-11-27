@@ -48,6 +48,17 @@ class ScheduledNotification extends Model
     ];
 
     /**
+     * The theme colors for the type column
+     *
+     * @var array
+     */
+    public static $typeThemes = [
+        DiscordChannel::class => '#EA4335',
+        TwitterChannel::class => '#8B99CD',
+        'mail' => '#1CA0F1',
+    ];
+
+    /**
      * Retrieve a hydrated version of the message, with
      * fields from the event interpolated
      *

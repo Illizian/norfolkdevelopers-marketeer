@@ -119,7 +119,7 @@ class ScheduledNotificationCalendarEvent extends JsonResource
              * String.
              * An alias for specifying the backgroundColor and borderColor at the same time.
              */
-            // 'color' =>
+            'color' => ScheduledNotification::$typeThemes[$this->type],
             /**
              * String.
              * Sets an event’s background color just like the calendar-wide eventBackgroundColor option.
