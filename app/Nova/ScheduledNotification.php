@@ -10,7 +10,6 @@ use \Illuminate\Http\Request;
 use \Laravel\Nova\Fields\{BelongsTo, Boolean, DateTime, Select, Text, Textarea, ID};
 use \Laravel\Nova\Http\Requests\NovaRequest;
 use \NotificationChannels\Discord\DiscordChannel;
-use \NotificationChannels\Twitter\TwitterChannel;
 
 class ScheduledNotification extends Resource
 {

@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\{BelongsTo, ID, Select, Text, Textarea};
 use Laravel\Nova\Http\Requests\NovaRequest;
 use NotificationChannels\Discord\DiscordChannel;
-use NotificationChannels\Twitter\TwitterChannel;
 
 class TemplateNotification extends Resource
 {
@@ -65,11 +64,7 @@ class TemplateNotification extends Resource
                 ->required(),
 
             Select::make(__('Notification Type'), 'type')
-                ->options([
-                    DiscordChannel::class => 'Discord',
-                    TwitterChannel::class => 'Twitter',
-                    'mail' => 'Email',
-                ])
+                ->options(\App\Models\ScheduledNotification::$typeEnumerable)
                 ->displayUsingLabels()
                 ->required(),
 
