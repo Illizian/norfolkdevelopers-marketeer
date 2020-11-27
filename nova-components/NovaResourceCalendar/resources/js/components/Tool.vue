@@ -3,7 +3,7 @@
         <heading class="mb-6">Calendar</heading>
 
         <card class="p-6">
-            <FullCalendar :options="calendarOptions" />
+            <FullCalendar ref="fullCalendar" :options="calendarOptions" />
         </card>
 
         <portal v-if="modalOpen" to="modals" transition="fade-transition">
@@ -14,6 +14,14 @@
                     </label>
 
                     <p>{{ current.extendedProps.type }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2 font-bold">
+                        Scheduled At:
+                    </label>
+
+                    <p>{{ current.start }}</p>
                 </div>
 
                 <div class="mb-4">
@@ -50,6 +58,7 @@
 import EventModal from './EventModal'
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'
 
 export default {
@@ -60,10 +69,11 @@ export default {
     data() {
         return {
             modalOpen: false,
+            weekView: false,
             current: false,
             calendarOptions: {
                 events: '/nova-vendor/nova-resource-calendar/events',
-                plugins: [ dayGridPlugin, interactionPlugin ],
+                plugins: [ timeGridPlugin, dayGridPlugin, interactionPlugin ],
                 initialView: 'dayGridMonth',
                 editable: true,
                 selectable: true,
@@ -72,12 +82,7 @@ export default {
                 weekends: true,
 
                 // Event Handlers
-                select: this.selectHandler,
-                eventClick: this.eventClickHandler,
-                eventsSet: this.eventsSetHandler,
-                eventAdd: this.eventAddHandler,
                 eventChange: this.eventChangeHandler,
-                eventRemove: this.eventRemoveHandler,
                 dateClick: this.dateClickHandler,
             }
         }
@@ -101,6 +106,10 @@ export default {
                 })
                 .then(console.log)
                 .catch(console.log);
+        },
+        dateClickHandler(date) {
+            this.weekView = !this.weekView;
+            this.$refs.fullCalendar.getApi().changeView(this.weekView ? 'timeGridWeek' : 'dayGridMonth', date);
         }
     },
 }
