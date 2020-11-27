@@ -54,9 +54,9 @@ class ScheduledNotification extends Model
      * @var array
      */
     public static $typeThemes = [
-        DiscordChannel::class => '#EA4335',
-        TwitterChannel::class => '#8B99CD',
-        'mail' => '#1CA0F1',
+        DiscordChannel::class => '#8B99CD',
+        TwitterChannel::class => '#1CA0F1',
+        'mail' => '#EA4335',
     ];
 
     /**
