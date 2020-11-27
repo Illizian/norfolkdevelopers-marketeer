@@ -20,7 +20,8 @@
         "laravel/framework": "^8.0",
         "laravel/nova": "*",
         "laravel/tinker": "^2.0",
-        "sentry/sentry-laravel": "^2.1"
+        "sentry/sentry-laravel": "^2.1",
+        "illizian/nova-resource-calendar": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -33,6 +34,10 @@
         {
             "type": "path",
             "url": "./nova"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/NovaResourceCalendar"
         }
     ],
     "config": {
