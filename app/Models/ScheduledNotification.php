@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use NotificationChannels\Discord\DiscordChannel;
 use NotificationChannels\Twitter\TwitterChannel;
 
@@ -71,6 +72,16 @@ class ScheduledNotification extends Model
         }
 
         return $this->message;
+    }
+
+    /**
+     * Retrieve a truncated and hydrated message
+     *
+     * @return string
+     */
+    public function getTruncatedHydratedMessageAttribute() : string
+    {
+        return Str::words($this->hydrated_message, 12, '…');
     }
 
     /**
