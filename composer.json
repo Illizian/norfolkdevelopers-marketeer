@@ -14,14 +14,17 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "illizian/nova-carbon-modifier-field": "^0.1.0",
         "illizian/nova-emoji-field-container": "^0.1.0",
+        "illizian/nova-resource-calendar": "*",
         "illizian/nova-suggest-field-container": "^0.1.0",
         "laravel-notification-channels/discord": "^1.1",
         "laravel-notification-channels/twitter": "^5.0",
         "laravel/framework": "^8.0",
+        "laravel/jetstream": "^1.6",
         "laravel/nova": "*",
+        "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
-        "sentry/sentry-laravel": "^2.1",
-        "illizian/nova-resource-calendar": "*"
+        "livewire/livewire": "^2.0",
+        "sentry/sentry-laravel": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
