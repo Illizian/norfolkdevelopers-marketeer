@@ -3,7 +3,9 @@
         <heading class="mb-6">Calendar</heading>
 
         <card class="p-6">
-            <FullCalendar ref="fullCalendar" :options="calendarOptions" />
+            <div class="max-w-5xl">
+                <FullCalendar ref="fullCalendar" :options="calendarOptions" />
+            </div>
         </card>
 
         <portal v-if="modalOpen" to="modals" transition="fade-transition">
@@ -69,25 +71,42 @@ export default {
     data() {
         return {
             modalOpen: false,
-            weekView: false,
+            dayView: false,
             current: false,
             calendarOptions: {
                 events: '/nova-vendor/nova-resource-calendar/events',
                 plugins: [ timeGridPlugin, dayGridPlugin, interactionPlugin ],
                 initialView: 'dayGridMonth',
                 editable: true,
-                selectable: true,
                 selectMirror: true,
                 dayMaxEvents: true,
                 weekends: true,
 
+                // Toolbar
+                customButtons: {
+                    createEvent: {
+                        text: 'Create',
+                        icon: 'plus-square',
+                        click: this.createEventHandler,
+                    }
+                },
+                headerToolbar: {
+                    left: 'title',
+                    center: '',
+                    right: 'createEvent dayGridMonth,timeGridWeek,timeGridDay today prev,next',
+                },
+
                 // Event Handlers
-                eventChange: this.eventChangeHandler,
                 dateClick: this.dateClickHandler,
+                eventClick: this.eventClickHandler,
+                eventChange: this.eventChangeHandler,
             }
         }
     },
     methods: {
+        createEventHandler() {
+            this.$router.push({ name: 'create', params: { resourceName: 'scheduled-notifications' }})
+        },
         eventClickHandler(payload) {
             if (this.modalOpen) {
                 this.modalOpen = false;
@@ -99,17 +118,19 @@ export default {
             this.modalOpen = true;
         },
         eventChangeHandler(payload) {
-            console.log(`${payload.event.id} update time to ${payload.event.startStr}`);
             axios
                 .put(`/nova-vendor/nova-resource-calendar/events/${payload.event.id}`, {
                     'scheduled_at': payload.event.startStr,
                 })
-                .then(console.log)
-                .catch(console.log);
+                .then(() => this.$toasted.show('Schedule updated!', { type: 'success' }))
+                .catch(() => this.$toasted.show('Error updating Schedule!', { type: 'error' }))
         },
         dateClickHandler(date) {
-            this.weekView = !this.weekView;
-            this.$refs.fullCalendar.getApi().changeView(this.weekView ? 'timeGridWeek' : 'dayGridMonth', date);
+            let view = ['dayGridMonth','timeGridWeek','timeGridDay'];
+            let type = this.$refs.fullCalendar.getApi().view.type;
+            let next = view[(view.indexOf(type) + 1) % view.length];
+
+            this.$refs.fullCalendar.getApi().changeView(next, date.dateStr);
         }
     },
 }
