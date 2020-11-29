@@ -46,6 +46,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'sanctum' => [
+            'provider' => 'users'
+        ]
     ],
 
     /*
