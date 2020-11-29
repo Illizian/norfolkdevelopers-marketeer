@@ -32,6 +32,16 @@ class Event extends Resource
     ];
 
     /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return "Events";
+    }
+
+    /**
      * The default sort
      *
      * @var array

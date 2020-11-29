@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
+use \Vyuldashev\NovaPermission\PermissionBooleanGroup;
+use \Vyuldashev\NovaPermission\RoleSelect;
 
 class User extends Resource
 {
@@ -34,6 +36,16 @@ class User extends Resource
     ];
 
     /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return __('nova-permission-tool::navigation.sidebar-label');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -55,6 +67,10 @@ class User extends Resource
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
+
+            RoleSelect::make(__('Role'), 'roles'),
+
+            PermissionBooleanGroup::make(__('Permissions'), 'permissions'),
 
             Password::make('Password')
                 ->onlyOnForms()
