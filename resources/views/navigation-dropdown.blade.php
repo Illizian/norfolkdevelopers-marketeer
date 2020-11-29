@@ -16,9 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ config('nova.path') }}">
-                        {{ __('Nova') }}
-                    </x-jet-nav-link>
+                    @can('tool.nova')
+                        <x-jet-nav-link href="{{ config('nova.path') }}">
+                            {{ __('Nova') }}
+                        </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -125,9 +127,11 @@
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
 
-            <x-jet-responsive-nav-link href="{{ config('nova.path') }}">
-                {{ __('Nova') }}
-            </x-jet-responsive-nav-link>
+            @can('tool.nova')
+                <x-jet-responsive-nav-link href="{{ config('nova.path') }}">
+                    {{ __('Nova') }}
+                </x-jet-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

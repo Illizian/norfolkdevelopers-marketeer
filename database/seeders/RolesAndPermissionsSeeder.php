@@ -50,6 +50,11 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // Create General Permissions
+        Permission::create([
+            'name' => 'tool.nova',
+        ]);
+
         // Create Permissions from $models & $modelActions
         foreach ($this->models as $model) {
             foreach ($this->modelActions as $action) {
@@ -69,6 +74,9 @@ class RolesAndPermissionsSeeder extends Seeder
                     $action = $this->modelActions[$index % count($this->modelActions)];
 
                     $role->givePermissionTo("model.$model.$action");
+
+                    // Add General Permissions to this $role
+                    $role->givePermissionTo('tool.nova');
                 }
             }
         }
