@@ -42,5 +42,5 @@ jobs:
         ARGS: -avz --delete --exclude-from='.rsync-ignore' --ignore-times --compress --no-perms --no-owner --no-group
         SSH_ARGS: '-p 22 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet'
         SOURCE: ./
-        PRE_SCRIPT: ""
-        POST_SCRIPT: "cd /var/www/html/ && php artisan migrate --force && php artisan cache:clear"
+        PRE_SCRIPT: "cd /var/www/html/ && php artisan down"
+        POST_SCRIPT: "cd /var/www/html/ && php artisan migrate --force && php artisan cache:clear && php artisan up"
