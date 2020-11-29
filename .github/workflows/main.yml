@@ -43,4 +43,4 @@ jobs:
         SSH_ARGS: '-p 22 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet'
         SOURCE: ./
         PRE_SCRIPT: ""
-        POST_SCRIPT: "cd /var/www/html/ && php artisan migrate --force"
+        POST_SCRIPT: "cd /var/www/html/ && php artisan migrate --force && php artisan cache:clear"
