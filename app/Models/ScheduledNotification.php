@@ -81,7 +81,7 @@ class ScheduledNotification extends Model
      */
     public function getTruncatedHydratedMessageAttribute() : string
     {
-        return Str::words($this->hydrated_message, 12, '…');
+        return Str::limit($this->hydrated_message, 120, '…');
     }
 
     /**
