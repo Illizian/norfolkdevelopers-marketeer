@@ -76,7 +76,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new NovaResourceCalendar,
+            (new NovaResourceCalendar)
+                ->canSee(function($request) {
+                    return $request->user()->can('model.event.read');
+                }),
             (new NovaPermissionTool)
                 ->rolePolicy(UserPolicy::class)
                 ->permissionPolicy(UserPolicy::class),
