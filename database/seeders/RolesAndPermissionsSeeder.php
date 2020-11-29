@@ -54,7 +54,7 @@ class RolesAndPermissionsSeeder extends Seeder
         foreach ($this->models as $model) {
             foreach ($this->modelActions as $action) {
                 Permission::create([
-                    'name' => "$model-$action",
+                    'name' => "model.$model.$action",
                 ]);
             }
         }
@@ -68,7 +68,7 @@ class RolesAndPermissionsSeeder extends Seeder
                     $model = $this->models[floor($index / (count($this->models) - 1))];
                     $action = $this->modelActions[$index % count($this->modelActions)];
 
-                    $role->givePermissionTo("$model-$action");
+                    $role->givePermissionTo("model.$model.$action");
                 }
             }
         }
