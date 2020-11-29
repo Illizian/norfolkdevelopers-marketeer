@@ -1,0 +1,15 @@
+:root {
+  --primary: #3C366B;
+  --logo: #3C366B;
+}
+
+.bg-logo {
+  background-color: ;
+}
+
+.bg-grad-sidebar {
+    background-color: #412C53;
+    background-image: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-position: top left;
+}
