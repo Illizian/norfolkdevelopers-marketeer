@@ -68,6 +68,11 @@ export default {
         FullCalendar,
         EventModal,
     },
+    metaInfo() {
+        return {
+            title: 'Calendar',
+        }
+    },
     data() {
         return {
             modalOpen: false,
