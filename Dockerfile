@@ -1,9 +1,5 @@
 FROM lorisleiva/laravel-docker:7.4
 
-RUN apk add --no-cache autoconf
-RUN pecl install redis
-RUN docker-php-ext-enable redis
-
 RUN rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo -e "upload_max_filesize = 128M\npost_max_size = 256M" >> /usr/local/etc/php/conf.d/statamic.ini
 RUN mkdir /.config && chmod 777 /.config
