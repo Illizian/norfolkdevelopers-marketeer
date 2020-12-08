@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use \Illizian\NovaRruleField\NovaRruleField;
 use \Illuminate\Http\Request;
 use \Laravel\Nova\Fields\{ID, Text, DateTime, Number, Markdown, HasMany, Timezone};
 use \Laravel\Nova\Http\Requests\NovaRequest;
@@ -65,6 +66,9 @@ class Event extends Resource
             DateTime::make(__('Date and time'), 'start_time')
                 ->sortable()
                 ->required(),
+
+            NovaRruleField::make(__('Repeat event'), 'rrule')
+                ->simple(),
 
             Number::make(__('Duration (seconds)'), 'duration')
                 ->onlyOnForms()

@@ -9,9 +9,11 @@ use \Carbon\Carbon;
 use \Carbon\CarbonInterface;
 use \Carbon\CarbonInterval;
 use \Carbon\CarbonTimeZone;
+use \Illuminate\Database\Eloquent\Builder;
 use \Illuminate\Database\Eloquent\Factories\HasFactory;
 use \Illuminate\Database\Eloquent\Model;
 use \Illuminate\Support\Str;
+use \RRule\RRule;
 
 class Event extends Model
 {
@@ -133,6 +135,39 @@ class Event extends Model
         // Trim the +03:00 to +3, or, +11:00 to +11, but +11:30 remains
         return "UTC" . str_replace('+0', '+', str_replace(':00', '', $offset));
     }
+
+    /**
+     * Retrieve an \RRule\RRule interface for the rrule attribute
+     *
+     * @return RRule
+     */
+    public function getRepeatingAttribute() : RRule
+    {
+        return new RRule($this->rrule);
+    }
+
+    /**
+     * Scope a query to only include repeating events
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRepeating(Builder $query) : Builder
+    {
+        return $query->whereNotNull('rrule');
+    }
+
+    /**
+     * Scope a query to only include events in the past
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePassed(Builder $query) : Builder
+    {
+        return $query->where('start_time', '<=', now());
+    }
+
     /**
      * Get the ScheduledNotifications associated with this Event
      */
@@ -140,5 +175,4 @@ class Event extends Model
     {
         return $this->hasMany(ScheduledNotification::class);
     }
-
 }
