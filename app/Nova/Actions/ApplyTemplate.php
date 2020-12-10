@@ -25,15 +25,11 @@ class ApplyTemplate extends Action
      */
     public function handle(ActionFields $fields, Collection $events)
     {
-        $notifications = Template::find($fields->template)->notifications;
+        // $fields->template contains an ID for a template, let's grab the Entity
+        $templates = collect([ Template::find($fields->template) ]);
 
-        $events->each(function (Event $event) use ($notifications) {
-            $event->notifications()->createMany(
-                $notifications
-                    ->map(fn($notification) => $notification->forEvent($event))
-                    ->toArray()
-            );
-        });
+        // Apply this template to each event
+        $events->each(fn($event) => $event->applyTemplates($templates));
     }
 
     /**

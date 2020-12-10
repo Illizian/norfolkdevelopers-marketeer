@@ -2,8 +2,9 @@
 
 namespace App\Nova;
 
+use \Illizian\NovaRruleField\NovaRruleField;
 use \Illuminate\Http\Request;
-use \Laravel\Nova\Fields\{ID, Text, DateTime, Number, Markdown, HasMany, Timezone};
+use \Laravel\Nova\Fields\{BelongsToMany, ID, Text, DateTime, Number, Markdown, HasMany, Timezone};
 use \Laravel\Nova\Http\Requests\NovaRequest;
 
 class Event extends Resource
@@ -66,6 +67,9 @@ class Event extends Resource
                 ->sortable()
                 ->required(),
 
+            NovaRruleField::make(__('Repeat event'), 'rrule')
+                ->simple(),
+
             Number::make(__('Duration (seconds)'), 'duration')
                 ->onlyOnForms()
                 ->required(),
@@ -84,6 +88,8 @@ class Event extends Resource
                 ->required(),
 
             Text::make(__('RSVP Link'), 'rsvp_link'),
+
+            BelongsToMany::make(__('Templates'), 'templates'),
 
             HasMany::make(__('Scheduled Notifications'), 'notifications'),
         ];
