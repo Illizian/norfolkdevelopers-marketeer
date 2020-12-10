@@ -27,8 +27,15 @@ class RescheduleRepeatingEvents implements ShouldQueue
             ->get()
             ->filter(fn($event) => $event->repeating->count() > 0)
             ->each(function($event) {
+                // Set a new start_time to the next occurence of the Rrule
                 $event->start_time = $event->repeating->getOccurrences(1)[0];
+
+                // Create any configured ScheduledNotifications from assigned TemplateNotifications
+                $event->applyTemplates();
+
                 $event->save();
             });
+
+        return 0;
     }
 }

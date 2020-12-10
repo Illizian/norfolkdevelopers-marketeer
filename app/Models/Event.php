@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \App\Models\ScheduledNotification;
+use \App\Models\Template;
 use \App\Traits\ProvidesTemplateVars;
 
 use \Carbon\Carbon;
@@ -174,5 +175,27 @@ class Event extends Model
     public function notifications()
     {
         return $this->hasMany(ScheduledNotification::class);
+    }
+
+    /**
+     * Get the Templates associated with this Event
+     */
+    public function templates()
+    {
+        return $this->belongsToMany(Template::class);
+    }
+
+    /**
+     * Get the Templates associated with this Event
+     */
+    public function applyTemplates($templates = null)
+    {
+        return ($templates ?? $this->templates)->each(function ($template) {
+            $this->notifications()->createMany(
+                $template->notifications
+                    ->map(fn($notification) => $notification->forEvent($this))
+                    ->toArray()
+            );
+        });
     }
 }
