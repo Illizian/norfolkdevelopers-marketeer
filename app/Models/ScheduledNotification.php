@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 use NotificationChannels\Discord\DiscordChannel;
 use NotificationChannels\Twitter\TwitterChannel;
 
-
 class ScheduledNotification extends Model
 {
     use HasFactory;
