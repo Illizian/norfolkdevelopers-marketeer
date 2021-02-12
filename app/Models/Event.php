@@ -5,6 +5,7 @@ namespace App\Models;
 use \App\Models\ScheduledNotification;
 use \App\Models\Template;
 use \App\Traits\ProvidesTemplateVars;
+use \App\Traits\ProvidesRepeatingSchedule;
 
 use \Carbon\Carbon;
 use \Carbon\CarbonInterface;
@@ -14,12 +15,12 @@ use \Illuminate\Database\Eloquent\Builder;
 use \Illuminate\Database\Eloquent\Factories\HasFactory;
 use \Illuminate\Database\Eloquent\Model;
 use \Illuminate\Support\Str;
-use \RRule\RRule;
 
 class Event extends Model
 {
     use HasFactory;
     use ProvidesTemplateVars;
+    use ProvidesRepeatingSchedule;
 
     /**
      * The attributes that should be cast to native types.
@@ -135,16 +136,6 @@ class Event extends Model
 
         // Trim the +03:00 to +3, or, +11:00 to +11, but +11:30 remains
         return "UTC" . str_replace('+0', '+', str_replace(':00', '', $offset));
-    }
-
-    /**
-     * Retrieve an \RRule\RRule interface for the rrule attribute
-     *
-     * @return RRule
-     */
-    public function getRepeatingAttribute() : RRule
-    {
-        return new RRule($this->rrule);
     }
 
     /**
