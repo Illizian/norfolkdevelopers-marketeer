@@ -677,6 +677,7 @@
             },
             /**
             * Create a new RRule from current configuration
+            * - Here be dragons
             */
             getRrule() {
                 let output = Object.assign(
@@ -707,10 +708,10 @@
                 var rrule = this.field.value ? rrulestr(this.field.value).origOptions : {};
             },
             /*
-            * Get the current rrule as an encoded string.
+            * Get the list of dates produced by the RRule
             */
             dates() {
-                return this.getRrule().all((date, i) => i < 10);
+                return this.getRrule().all((date, i) => i < 10)
             },
 
             /*

@@ -1,9 +1,9 @@
-import { format } from 'date-fns'
+import { addMinutes, format } from 'date-fns'
 
 Nova.booting((Vue, router, store) => {
     Vue.filter('date-format', function(value) {
         if (value) {
-            return format(value, 'PPPP pp');
+            return format(addMinutes(value, value.getTimezoneOffset()), 'PPPP pp');
         }
     });
 
