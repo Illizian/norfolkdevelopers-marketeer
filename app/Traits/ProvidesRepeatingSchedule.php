@@ -38,9 +38,9 @@ trait ProvidesRepeatingSchedule {
     /**
      * Get the next occurence of the \RRule\RRule from `now()`
      *
-     * @return boolean
+     * @return DateTime|null
      */
-    public function getScheduledNextAttribute() : \DateTime
+    public function getScheduledNextAttribute() : ?\DateTime
     {
         return $this->repeating->getNthOccurrenceAfter(now(), 1);
     }

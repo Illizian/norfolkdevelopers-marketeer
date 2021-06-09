@@ -22,7 +22,7 @@ class EventFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->words(3,6),
+            'title' => $this->faker->words(3, true),
             'start_time' => $this->faker->dateTimeBetween('now', '+6 months'),
             'duration' => $this->faker->randomElement([3600, 5400, 7200, 14400]),
             'description' => $this->faker->paragraphs($this->faker->randomDigit(), true),

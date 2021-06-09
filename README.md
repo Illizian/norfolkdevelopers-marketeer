@@ -22,15 +22,12 @@ Then, complete the required fields, providing a `DISCORD_BOT_TOKEN`, `TWITTER_CO
 
 ### Docker
 
-- `docker-compose --build -d up` - To start up the Docker containers for the first time
-- `docker-compose stop` - To shutdown the containers
-- `docker-compose start` - To start the containers once already built
-- `docker-compose down` - (Shutdown the containers) and delete the containers
+This is a Laravel application. Local development is done using laravel/sail, just run:
 
-You can then issue commands to the Laravel image via the `docker-compose exec` command:
-
-- `docker-compose exec www php artisan migrate`
-- `docker-compose exec www php artisan nova:user`
+```
+composer install
+./vendor/bin/sail up
+```
 
 ### Discord
 
