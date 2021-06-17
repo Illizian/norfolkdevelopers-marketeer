@@ -21,7 +21,7 @@
         "laravel-notification-channels/twitter": "^5.0",
         "laravel/framework": "^8.0",
         "laravel/jetstream": "^1.6",
-        "laravel/nova": "*",
+        "laravel/nova": "^3.12",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.0",
@@ -40,8 +40,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "./nova"
+            "type": "composer",
+            "url": "https://nova.laravel.com"
         },
         {
             "type": "path",
