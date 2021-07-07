@@ -28,6 +28,16 @@ trait ProvidesTweetSending {
             $params['in_reply_to_status_id'] = json_decode($this->reply->response)->id_str;
         }
 
+        // Extract any featured imagery
+        $images = $this->getMedia('featured');
+
+        if ($images->count()) {
+            // If this ScheduledNotification has featured images, upload and assign it's ID to params
+            $params['media_ids'] = $images
+                ->map(fn($image) => $twitter->upload('media/upload', [ 'media' => $image->getPath() ]))
+                ->implode('media_id_string', ',');
+        }
+
         return $twitter->post('statuses/update', $params);
     }
 }

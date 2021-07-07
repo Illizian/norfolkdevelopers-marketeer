@@ -95,7 +95,10 @@ class ScheduledNotification extends Resource
             ])->dependsOn('type', TwitterChannel::class),
 
             // General Fields
-            Images::make('Image', 'featured'),
+            Images::make('Image', 'featured')
+                ->conversionOnDetailView('thumb')
+                ->conversionOnIndexView('thumb')
+                ->enableExistingMedia(),
 
             NovaSuggestWrapper::make([
                 NovaEmojiFieldContainer::make([

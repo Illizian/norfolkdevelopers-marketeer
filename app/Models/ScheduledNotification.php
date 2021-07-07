@@ -85,7 +85,7 @@ class ScheduledNotification extends Model implements HasMedia
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('featured')->singleFile();
+        $this->addMediaCollection('featured');
     }
 
     /**
