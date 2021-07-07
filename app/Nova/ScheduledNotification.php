@@ -3,16 +3,20 @@
 namespace App\Nova;
 
 use \App\Models\Event;
-
+use \Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use \Illizian\NovaEmojiFieldContainer\NovaEmojiFieldContainer;
 use \Illizian\NovaSuggestWrapper\NovaSuggestWrapper;
 use \Illuminate\Http\Request;
 use \Laravel\Nova\Fields\{BelongsTo, Boolean, DateTime, Select, Text, Textarea, ID};
 use \Laravel\Nova\Http\Requests\NovaRequest;
 use \NotificationChannels\Discord\DiscordChannel;
+use \NotificationChannels\Twitter\TwitterChannel;
 
 class ScheduledNotification extends Resource
 {
+    use HasDependencies;
+
     /**
      * The model the resource corresponds to.
      *
@@ -70,6 +74,7 @@ class ScheduledNotification extends Resource
     public function fields(Request $request)
     {
         return [
+            // Meta fields
             ID::make(__('ID'), 'id'),
 
             Select::make(__('Notification Type'), 'type')
@@ -82,9 +87,13 @@ class ScheduledNotification extends Resource
                 ->help('The channel, email, or account, this message should be delivered to.')
                 ->rules('required_if:type,' . DiscordChannel::class),
 
-            BelongsTo::make(__('In reply to'), 'reply', ScheduledNotification::class)
-                ->nullable(),
+            // Twitter Fields
+            NovaDependencyContainer::make([
+                BelongsTo::make(__('In reply to'), 'reply', ScheduledNotification::class)
+                    ->nullable(),
+            ])->dependsOn('type', TwitterChannel::class),
 
+            // General Fields
             NovaSuggestWrapper::make([
                 NovaEmojiFieldContainer::make([
                     Textarea::make(__('Message'), 'message')
