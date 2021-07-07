@@ -82,6 +82,9 @@ class ScheduledNotification extends Resource
                 ->help('The channel, email, or account, this message should be delivered to.')
                 ->rules('required_if:type,' . DiscordChannel::class),
 
+            BelongsTo::make(__('In reply to'), 'reply', ScheduledNotification::class)
+                ->nullable(),
+
             NovaSuggestWrapper::make([
                 NovaEmojiFieldContainer::make([
                     Textarea::make(__('Message'), 'message')

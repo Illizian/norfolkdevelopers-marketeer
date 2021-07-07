@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Event;
+use App\Traits\ProvidesTweetSending;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ class ScheduledNotification extends Model
 {
     use HasFactory;
     use Notifiable;
+    use ProvidesTweetSending;
 
     /**
      * The attributes that are mass assignable.
@@ -113,6 +115,14 @@ class ScheduledNotification extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the scheduled notification this scheduled notification should reply to
+     */
+    public function reply()
+    {
+        return $this->belongsTo(self::class);
     }
 
     /**

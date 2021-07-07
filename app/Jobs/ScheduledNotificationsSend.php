@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
+use NotificationChannels\Twitter\TwitterChannel;
 
 class ScheduledNotificationsSend implements ShouldQueue
 {
@@ -46,7 +47,12 @@ class ScheduledNotificationsSend implements ShouldQueue
     public function handle()
     {
         $this->models->each(function ($notification) {
-            $notification->notify(new ScheduledNotification);
+            if ($notification->type === TwitterChannel::class) {
+                $notification->response = json_encode($notification->sendAsTweet());
+            } else {
+                $notification->notify(new ScheduledNotification);
+            }
+
             $notification->sent = true;
             $notification->save();
         });
