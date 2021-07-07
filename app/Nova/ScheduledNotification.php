@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use \App\Models\Event;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use \Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use \Illizian\NovaEmojiFieldContainer\NovaEmojiFieldContainer;
@@ -94,6 +95,8 @@ class ScheduledNotification extends Resource
             ])->dependsOn('type', TwitterChannel::class),
 
             // General Fields
+            Images::make('Image', 'featured'),
+
             NovaSuggestWrapper::make([
                 NovaEmojiFieldContainer::make([
                     Textarea::make(__('Message'), 'message')

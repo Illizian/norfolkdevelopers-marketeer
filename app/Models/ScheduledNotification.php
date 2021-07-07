@@ -11,12 +11,16 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use NotificationChannels\Discord\DiscordChannel;
 use NotificationChannels\Twitter\TwitterChannel;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class ScheduledNotification extends Model
+class ScheduledNotification extends Model implements HasMedia
 {
     use HasFactory;
     use Notifiable;
     use ProvidesTweetSending;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +64,29 @@ class ScheduledNotification extends Model
         TwitterChannel::class => '#1CA0F1',
         'mail' => '#EA4335',
     ];
+
+
+    /**
+     * Registers any required conversion on all registered media collections
+     *
+     * @param Media|null $media
+     * @return void
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(140)
+            ->height(140);
+    }
+
+    /**
+     * Registers Media Collections for this
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('featured')->singleFile();
+    }
 
     /**
      * Retrieve a hydrated version of the message, with
