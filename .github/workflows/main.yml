@@ -25,7 +25,9 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: |
+        composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
+        composer install --prefer-dist --no-progress --no-suggest
 
     - name: Deploy to Digital Ocean
       uses: up9cloud/action-rsync@v1.1
