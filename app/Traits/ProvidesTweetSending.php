@@ -7,13 +7,16 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 trait ProvidesTweetSending {
     public function sendAsTweet()
     {
-        $twitter = new TwitterOAuth(
-            config('services.twitter.consumer_key'),
-            config('services.twitter.consumer_secret'),
-            config('services.twitter.access_token'),
-            config('services.twitter.access_secret')
-        );
+        $twitter = app()->make(TwitterOAuth::class);
 
+        return $twitter->post(
+            'statuses/update',
+            $this->generateTweetParams($twitter)
+        );
+    }
+
+    public function generateTweetParams(TwitterOAuth $twitter): array
+    {
         $params = [
             'status' => $this->hydrated_message,
             'response_format' => 'json'
@@ -38,6 +41,6 @@ trait ProvidesTweetSending {
                 ->implode('media_id_string', ',');
         }
 
-        return $twitter->post('statuses/update', $params);
+        return $params;
     }
 }
