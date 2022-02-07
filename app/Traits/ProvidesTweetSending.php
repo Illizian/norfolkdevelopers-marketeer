@@ -9,10 +9,9 @@ trait ProvidesTweetSending {
     {
         $twitter = app()->make(TwitterOAuth::class);
 
-        return $twitter->post(
-            'statuses/update',
-            $this->generateTweetParams($twitter)
-        );
+        return $this->destination
+            ? $twitter->post('direct_messages/events/new', $this->generateDmParams(), true)
+            : $twitter->post('statuses/update', $this->generateTweetParams($twitter));
     }
 
     public function generateTweetParams(TwitterOAuth $twitter): array
@@ -42,5 +41,22 @@ trait ProvidesTweetSending {
         }
 
         return $params;
+    }
+
+    public function generateDmParams(): array
+    {
+        return [
+            'event' => [
+                'type' => 'message_create',
+                'message_create' => [
+                    'target' => [
+                        'recipient_id' => $this->destination,
+                    ],
+                    'message_data' => [
+                        'text' => $this->hydrated_message,
+                    ]
+                ]
+            ]
+        ];
     }
 }

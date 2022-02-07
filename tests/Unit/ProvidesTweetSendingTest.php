@@ -118,4 +118,39 @@ class ProvidesTweetSendingTest extends TestCase
 
         $notification->sendAsTweet();
     }
+
+    public function test_should_send_a_direct_message()
+    {
+        $this->mock(TwitterOAuth::class, fn($mock) =>
+            $mock->shouldReceive('post')
+                ->with(
+                    'direct_messages/events/new',
+                    [
+                        'event' => [
+                            'type' => 'message_create',
+                            'message_create' => [
+                                'target' => [
+                                    'recipient_id' => '1234'
+                                ],
+                                'message_data' => [
+                                    'text' => 'This is a test tweet'
+                                ]
+                            ]
+                        ]
+                    ],
+                    true
+                )
+                ->once()
+        );
+
+        $notification = ScheduledNotification::factory()->create([
+            'type' => TwitterChannel::class,
+            'destination' => '1234',
+            'message' => 'This is a test tweet',
+            'sent' => false,
+            'scheduled_at' => now(),
+        ]);
+
+        $notification->sendAsTweet();
+    }
 }
