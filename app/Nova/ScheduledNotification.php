@@ -4,20 +4,14 @@ namespace App\Nova;
 
 use \App\Models\Event;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use \Epartment\NovaDependencyContainer\HasDependencies;
-use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use \Illizian\NovaEmojiFieldContainer\NovaEmojiFieldContainer;
 use \Illizian\NovaSuggestWrapper\NovaSuggestWrapper;
 use \Illuminate\Http\Request;
 use \Laravel\Nova\Fields\{BelongsTo, Boolean, DateTime, Select, Text, Textarea, ID};
-use \Laravel\Nova\Http\Requests\NovaRequest;
 use \NotificationChannels\Discord\DiscordChannel;
-use \NotificationChannels\Twitter\TwitterChannel;
 
 class ScheduledNotification extends Resource
 {
-    use HasDependencies;
-
     /**
      * The model the resource corresponds to.
      *
@@ -28,9 +22,12 @@ class ScheduledNotification extends Resource
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
-     * @var string
+     * @return string
      */
-    public static $title = 'id';
+    public function title()
+    {
+        return "[$this->id] $this->truncatedHydratedMessage";
+    }
 
     /**
      * The columns that should be searched.
@@ -89,10 +86,8 @@ class ScheduledNotification extends Resource
                 ->rules('required_if:type,' . DiscordChannel::class),
 
             // Twitter Fields
-            NovaDependencyContainer::make([
-                BelongsTo::make(__('In reply to'), 'reply', ScheduledNotification::class)
-                    ->nullable(),
-            ])->dependsOn('type', TwitterChannel::class),
+            BelongsTo::make(__('In reply to'), 'reply', ScheduledNotification::class)
+                ->nullable(),
 
             // General Fields
             Images::make('Image', 'featured')
