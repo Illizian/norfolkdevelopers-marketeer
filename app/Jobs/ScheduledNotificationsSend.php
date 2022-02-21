@@ -47,10 +47,14 @@ class ScheduledNotificationsSend implements ShouldQueue
     public function handle()
     {
         $this->models->each(function ($notification) {
-            if ($notification->type === TwitterChannel::class) {
-                $notification->response = json_encode($notification->sendAsTweet());
-            } else {
-                $notification->notify(new ScheduledNotification);
+            switch ($notification->type) {
+                case TwitterChannel::class:
+                    $notification->response = json_encode($notification->sendAsTweet());
+                    break;
+
+                default:
+                    $notification->notify(new ScheduledNotification);
+                    break;
             }
 
             $notification->sent = true;
