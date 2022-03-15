@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Event;
+use App\Traits\ProvidesTelephony;
 use App\Traits\ProvidesTweetSending;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class ScheduledNotification extends Model implements HasMedia
     use HasFactory;
     use Notifiable;
     use ProvidesTweetSending;
+    use ProvidesTelephony;
     use InteractsWithMedia;
 
     /**
@@ -52,6 +54,8 @@ class ScheduledNotification extends Model implements HasMedia
         DiscordChannel::class => 'Discord',
         TwitterChannel::class => 'Twitter',
         'mail' => 'Email',
+        'sms' => 'SMS',
+        'phone' => 'Phone call',
     ];
 
     /**
@@ -63,6 +67,8 @@ class ScheduledNotification extends Model implements HasMedia
         DiscordChannel::class => '#8B99CD',
         TwitterChannel::class => '#1CA0F1',
         'mail' => '#EA4335',
+        'sms' => '#BE185D',
+        'phone' => '#6D28D9',
     ];
 
 

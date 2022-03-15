@@ -51,6 +51,12 @@ class ScheduledNotificationsSend implements ShouldQueue
                 case TwitterChannel::class:
                     $notification->response = json_encode($notification->sendAsTweet());
                     break;
+                case 'sms':
+                    $notification->response = json_encode($notification->sendAsSms());
+                    break;
+                case 'phone':
+                    $notification->response = json_encode($notification->sendAsPhone());
+                    break;
 
                 default:
                     $notification->notify(new ScheduledNotification);
