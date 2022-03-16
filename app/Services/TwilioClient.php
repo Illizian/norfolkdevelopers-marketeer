@@ -42,11 +42,11 @@ class TwilioClient
 
     public function call(string $to, string $content): CallInstance
     {
-        $Twiml = (new VoiceResponse())
-            ->say('Hello, this is a notification from NorDev Marketeer')
-            ->pause([ 'length' => 2 ])
-            ->say($content)
-            ->asXML();
+        $Twiml = new VoiceResponse();
+        $Twiml->say('Hello, this is a notification from NorDev Marketeer');
+        $Twiml->pause([ 'length' => 2 ]);
+        $Twiml->say($content);
+        $Twiml->asXML();;
 
         return $this->client->calls->create(
             $to,
