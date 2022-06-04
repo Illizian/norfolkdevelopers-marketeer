@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use \App\Models\Event;
-use \App\Models\ScheduledNotification;
-use \Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Event::factory()
-            ->has(ScheduledNotification::factory()->count(6), 'notifications')
-            ->count(10)
-            ->create();
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }

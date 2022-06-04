@@ -18,6 +18,7 @@ return [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'scheme' => 'https',
     ],
 
     'postmark' => [
@@ -28,23 +29,6 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
-
-    'discord' => [
-        'token' => env('DISCORD_BOT_TOKEN'),
-    ],
-
-    'twitter' => [
-        'consumer_key'    => env('TWITTER_CONSUMER_KEY'),
-        'consumer_secret' => env('TWITTER_CONSUMER_SECRET'),
-        'access_token'    => env('TWITTER_ACCESS_TOKEN'),
-        'access_secret'   => env('TWITTER_ACCESS_SECRET'),
-    ],
-
-    'twilio' => [
-        'sid'    => env('TWILIO_SID'),
-        'token' => env('TWILIO_TOKEN'),
-        'from' => env('TWILIO_FROM'),
     ],
 
 ];
