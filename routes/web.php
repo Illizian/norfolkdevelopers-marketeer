@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/accounts/{account}/redirect', [AccountController::class, 'redirect'])->name('accounts.redirect');
+Route::get('/accounts/callback', [AccountController::class, 'callback'])->name('accounts.callback');
+Route::resource('accounts', AccountController::class);
