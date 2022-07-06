@@ -25,19 +25,21 @@ interface AccountInterface
     /**
      * Returns an interface containing the URL required to perform oAuth
      *
-     * @param Request $request
      * @return AccountRedirectInterface
      */
-    public function redirect(Request $request): AccountRedirectInterface;
+    public function redirect(): AccountRedirectInterface;
 
     /**
      * Resolve the callback from the Provider
      * into an AccountAuthorizeResponseInterface
      *
-     * @param Request $request
      * @return AccountCallbackInterface
      */
-    public function callback(Request $request): AccountCallbackInterface;
+    public function callback(
+        string $token,
+        string $secret,
+        string $verifier
+    ): AccountCallbackInterface;
 
     /**
      * For a given $post this method should validate
