@@ -39,29 +39,6 @@ it('throws an Exception if TwitterOAuth fails to retrieve a token for the redire
         ->redirect();
 })->throws(Exception::class, 'An error occured when creating an authorisation URL', 401);
 
-it('throws an Exception if TwitterOAuth fails to retrieve an oAuth URL for the redirect', function () {
-    // Mock the TwitterOAuth Library and assert it's usage
-    $this->app->instance(
-        TwitterOAuth::class,
-        mock(TwitterOAuth::class)
-            ->shouldReceive('oauth')->with('oauth/request_token', ['oauth_callback' => route('accounts.callback')])
-            ->andReturn(['oauth_token' => 'token', 'oauth_token_secret' => 'secret'])
-            ->shouldReceive('url')->with('oauth/authorize', ['oauth_token' => 'token'])
-            ->andReturn('https://twitter.com')
-            ->shouldReceive('getLastHttpCode')
-            ->andReturn(200, 401)
-            ->getMock()
-    );
-
-    // Create an account, assign the Twitter Provider
-    // and get an AccountRedirectInterface from it
-    Account::factory()
-        ->withProvider(TwitterAccount::class)
-        ->create()
-        ->getProvider()
-        ->redirect();
-})->throws(Exception::class, 'An error occured when creating an authorisation URL', 401);
-
 it('returns a TwitterRedirect', function () {
     // Mock the TwitterOAuth Library and assert it's usage
     $this->app->instance(

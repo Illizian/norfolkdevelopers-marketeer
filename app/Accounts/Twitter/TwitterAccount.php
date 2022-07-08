@@ -43,18 +43,10 @@ class TwitterAccount implements AccountInterface
             );
         }
 
-        // Get the Twitter URL where the User will complete the oAuth approval
+        // Generate a Twitter URL where the User will complete the oAuth approval
         $url = $this->twitter->url('oauth/authorize', [
             'oauth_token' => $tokens['oauth_token']
         ]);
-
-        /** @phpstan-ignore-next-line */
-        if ($this->twitter->getLastHttpCode() !== 200) {
-            throw new Exception(
-                __('An error occured when creating an authorisation URL'),
-                $this->twitter->getLastHttpCode()
-            );
-        }
 
         return new TwitterRedirect(
             $url,
