@@ -14,6 +14,15 @@ class Account extends Model implements AccountModelInterface
     use ProvidesAccountModelAttributes;
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, string>
+     */
+    protected $attributes = [
+        'status' => 'PENDING',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<string>

@@ -5,6 +5,18 @@ namespace App\Accounts\Contracts;
 interface AccountModelInterface
 {
     /**
+     * Return the current status of the account or
+     * update the status of the current account
+     * when provided a new $status parameter
+     *
+     * <PENDING|ENABLED|DISABLED|FAILED>
+     *
+     * @param string|null $status = null
+     * @return string
+     */
+    public function status(?string $status = null): string;
+
+    /**
      * The oAuth token for this Account
      *
      * @return string

@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\App;
 
 trait ProvidesAccountModelAttributes
 {
+    public function status(?string $status = null): string
+    {
+        if ($status) {
+            $this->status = $status;
+        }
+
+        return $this->status;
+    }
+
     public function token(): string
     {
         return $this->token;

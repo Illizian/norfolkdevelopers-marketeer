@@ -18,6 +18,12 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('type');
+            $table->enum('status', [
+                'PENDING',
+                'ENABLED',
+                'DISABLED',
+                'FAILED',
+            ]);
             $table->string('profile_name')->nullable();
             $table->string('token')->nullable();
             $table->string('secret')->nullable();

@@ -19,30 +19,34 @@ class PostFactory extends Factory
     {
         return [
             'content' => $this->faker->sentence(),
-            'status' => 'SCHEDULED',
             'scheduled_for' => $this->faker->dateTimeBetween('+1 days', '+30 days'),
         ];
     }
 
     /**
      * @param string $type
-     * @param mixed string
-     * @param string $token
-     * @param string $secret
+     * @param string name
+     * @param ?string $status
+     * @param ?string $profile_name
+     * @param ?string $token
+     * @param ?string $secret
+     * @param ?string $secret
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     public function withAccount(
         string $type,
-        string|null $name = 'Test Account',
-        string|null $profile_name = 'profileName',
-        string|null $token = 'token',
-        string|null $secret = 'secret',
-        string|null $refresh = 'refresh'
+        string $name = 'Test Account',
+        ?string $status = 'ENABLED',
+        ?string $profile_name = 'profileName',
+        ?string $token = 'token',
+        ?string $secret = 'secret',
+        ?string $refresh = 'refresh'
     ): Factory {
         return $this->forAccount(compact(
             'name',
             'type',
+            'status',
             'profile_name',
             'token',
             'secret',
@@ -52,6 +56,9 @@ class PostFactory extends Factory
 
     /**
      * Indicate that the post has been sent
+     *
+     * @param Carbon $at
+     * @param array $response
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */

@@ -18,6 +18,12 @@ it('returns the provider fields', function () {
     expect(TwitterAccount::fields())->toEqual([]);
 });
 
+it('returns a status of PENDING by default for new accounts', function () {
+    $subject = new Account();
+
+    expect($subject->status())->toEqual('PENDING');
+});
+
 /**
  * public function redirect(): TwitterRedirect
  */
@@ -190,6 +196,24 @@ it('should throw an error if calling publishPost() for an account that does not 
 })->throws(
     Exception::class,
     "The account doesn't have a token or a secret"
+);
+
+it('should throw an error if calling publishPost() for an account that does not have an ENABLED status', function (string $status) {
+    $post = Post::factory()
+        ->withAccount(
+            type: TwitterAccount::class,
+            status: $status
+        )
+        ->create();
+
+    $post->account->getProvider()->publishPost($post);
+})->with([
+    'PENDING',
+    'DISABLED',
+    'FAILED',
+])->throws(
+    Exception::class,
+    'The account is not enabled'
 );
 
 it('should validate a post as valid before publishing it', function (string $content) {

@@ -102,6 +102,10 @@ class TwitterAccount implements AccountInterface
             );
         }
 
+        if ($this->account->status() !== 'ENABLED') {
+            throw new Exception(__('The account is not enabled'));
+        }
+
         if (!$this->validatePost($post)) {
             throw new Exception(
                 __('Error: The provided post is not a valid as a :type post', [
