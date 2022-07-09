@@ -1,0 +1,29 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      # - name: Cache Composer dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/composer-cache
+      #     key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install & Test
+        uses: php-actions/composer@v6
+        with:
+          command: test
