@@ -19,6 +19,7 @@ class Post extends Model implements AccountPostInterface
      */
     protected $attributes = [
         'response' => '{}',
+        'status' => 'SCHEDULED',
     ];
 
     /**
@@ -31,6 +32,7 @@ class Post extends Model implements AccountPostInterface
         'content',
         'scheduled_for',
         'response',
+        'status',
     ];
 
     /**
