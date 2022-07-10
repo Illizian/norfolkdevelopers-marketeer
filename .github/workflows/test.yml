@@ -23,7 +23,8 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: Install & Test
+      - name: Install Dependencies
         uses: php-actions/composer@v6
-        with:
-          command: test
+
+      - name: Test
+        run: composer test
