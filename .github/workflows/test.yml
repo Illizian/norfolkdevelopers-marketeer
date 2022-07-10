@@ -15,20 +15,20 @@ jobs:
           php-version: "8.1"
           extensions: intl
 
-      - name: Checkout branch
-        uses: actions/checkout@v3
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: /tmp/composer-cache
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
-
-      - name: Install Dependencies
-        uses: php-actions/composer@v6
-
       - name: Debug
         run: php --ini
 
-      - name: Test
-        run: composer test
+      # - name: Checkout branch
+      #   uses: actions/checkout@v3
+
+      # - name: Cache Composer dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/composer-cache
+      #     key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      # - name: Install Dependencies
+      #   uses: php-actions/composer@v6
+
+      # - name: Test
+      #   run: composer test
