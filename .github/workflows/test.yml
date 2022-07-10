@@ -17,11 +17,11 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-      # - name: Cache Composer dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: /tmp/composer-cache
-      #     key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: Install & Test
         uses: php-actions/composer@v6
