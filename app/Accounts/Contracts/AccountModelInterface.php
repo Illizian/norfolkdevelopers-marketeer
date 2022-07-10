@@ -11,10 +11,9 @@ interface AccountModelInterface
      *
      * <PENDING|ENABLED|DISABLED|FAILED>
      *
-     * @param string|null $status = null
      * @return string
      */
-    public function status(?string $status = null): string;
+    public function status(): string;
 
     /**
      * The oAuth token for this Account

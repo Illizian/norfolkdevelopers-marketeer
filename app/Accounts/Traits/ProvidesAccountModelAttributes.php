@@ -7,12 +7,8 @@ use Illuminate\Support\Facades\App;
 
 trait ProvidesAccountModelAttributes
 {
-    public function status(?string $status = null): string
+    public function status(): string
     {
-        if ($status) {
-            $this->status = $status;
-        }
-
         return $this->status;
     }
 
