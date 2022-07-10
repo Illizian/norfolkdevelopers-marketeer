@@ -29,5 +29,5 @@ jobs:
         with:
           php_extensions: intl
 
-      # - name: Test
-      #   run: composer test
+      - name: Test
+        run: composer test
