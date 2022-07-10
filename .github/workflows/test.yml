@@ -27,5 +27,8 @@ jobs:
       - name: Install Dependencies
         uses: php-actions/composer@v6
 
+      - name: Debug
+        run: php --ini
+
       - name: Test
         run: composer test
