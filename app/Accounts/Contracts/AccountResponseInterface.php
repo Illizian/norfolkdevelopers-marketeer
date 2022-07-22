@@ -12,9 +12,23 @@ interface AccountResponseInterface
     public function sent(): bool;
 
     /**
+     * Returns the ID of the Post on the Provider
+     *
+     * @return string
+     */
+    public function id(): ?string;
+
+    /**
      * Errors returned when trying to send Post
      *
-     * @return array<string>
+     * @return string|null
      */
-    public function error(): array;
+    public function error(): ?string;
+
+    /**
+     * Returns the response from the provider
+     *
+     * @return object
+     */
+    public function raw(): object;
 }
