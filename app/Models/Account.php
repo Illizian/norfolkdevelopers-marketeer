@@ -30,6 +30,7 @@ class Account extends Model implements AccountModelInterface
     protected $fillable = [
         'name',
         'type',
+        'status',
         'profile_name',
         'token',
         'secret',
