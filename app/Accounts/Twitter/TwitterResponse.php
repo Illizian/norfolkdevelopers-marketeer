@@ -7,22 +7,36 @@ use App\Accounts\Contracts\AccountResponseInterface;
 class TwitterResponse implements AccountResponseInterface
 {
     /**
-     * @param array<string> $raw
+     * @param object $raw
      */
     public function __construct(
-        protected array $raw
+        protected object $raw
     ) {
     }
 
     public function sent(): bool
     {
-        // @TODO: Extract this boolean from a $raw attribute
-        return false;
+        return isset($this->raw->id_str);
     }
 
-    public function error(): array
+    public function id(): ?string
     {
-        // @TODO: Extract an array of error messages from a $raw attribute
-        return [];
+        return $this->sent()
+            ? $this->raw->id_str
+            : null;
+    }
+
+    public function error(): ?string
+    {
+        // @TODO: Why null coalesce not work
+        // return $this->raw?->errors[0]?->message
+        return isset($this->raw->errors)
+            ? $this->raw->errors[0]->message
+            : null;
+    }
+
+    public function raw(): object
+    {
+        return $this->raw;
     }
 }

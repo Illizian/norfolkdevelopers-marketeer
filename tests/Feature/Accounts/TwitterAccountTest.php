@@ -4,6 +4,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Accounts\Twitter\TwitterAccount;
 use App\Accounts\Twitter\TwitterCallback;
 use App\Accounts\Twitter\TwitterRedirect;
+use App\Accounts\Twitter\TwitterResponse;
 use App\Models\Account;
 use App\Models\Post;
 use Twitter\Text\Parser;
@@ -222,6 +223,7 @@ it('should validate a post as valid before publishing it', function (string $con
         ->withAccount(TwitterAccount::class)
         ->state(compact('content'))
         ->create();
+    $twitter_post_id = 1550464478784921606;
 
     // Mock the TwitterOauth & Twitter Parser libraries and assert their use
     $this->app->instance(
@@ -234,7 +236,10 @@ it('should validate a post as valid before publishing it', function (string $con
             ->with('statuses/update', [
                 'status'  => $post->getContent(),
             ])
-            ->andReturn(['success' => 'true'])
+            ->andReturn((object) [
+                "id" => $twitter_post_id,
+                "id_str" => (string) $twitter_post_id,
+            ])
             ->getMock()
     );
 
@@ -246,7 +251,7 @@ it('should validate a post as valid before publishing it', function (string $con
             ->andReturn(true)
     );
 
-    $post->account->getProvider()->publishPost($post);
+    $subject = $post->account->getProvider()->publishPost($post);
 })->with('tweets.valid');
 
 it('should validate a post as invalid and throw an exception', function (string $content) {
@@ -263,6 +268,99 @@ it('should validate a post as invalid and throw an exception', function (string 
         Exception::class,
         'The provided post is not a valid as a Twitter post'
     );
+
+it('should return TwitterResponse with success if Twitter provides them', function (string $content) {
+    // Create a post with an account
+    $post = Post::factory()
+        ->withAccount(TwitterAccount::class)
+        ->state(compact('content'))
+        ->create();
+
+    $twitter_post_id = 1550464478784921606;
+    $response = (object) [
+        "id" => $twitter_post_id,
+        "id_str" => (string) $twitter_post_id,
+    ];
+
+    // Mock the TwitterOauth & Twitter Parser libraries and assert their use
+    $this->app->instance(
+        TwitterOAuth::class,
+        mock(TwitterOAuth::class)
+            ->shouldReceive('setOauthToken')
+            ->with('token', 'secret')
+            ->andReturn(null)
+            ->shouldReceive('post')
+            ->with('statuses/update', [
+                'status'  => $post->getContent(),
+            ])
+            ->andReturn($response)
+            ->getMock()
+    );
+
+    $this->app->instance(
+        Parser::class,
+        mock(Parser::class)
+            ->shouldReceive('validatePost')
+            ->with($post)
+            ->andReturn(true)
+    );
+
+    $subject = $post->account->getProvider()->publishPost($post);
+
+    expect($subject)->toBeInstanceOf(TwitterResponse::class);
+    expect($subject->id())->toBeString()->toEqual((string) $twitter_post_id);
+    expect($subject->sent())->toBeBool()->toBeTrue();
+    expect($subject->error())->toBeNull();
+    expect($subject->raw())->toBeObject()->toEqual($response);
+})->with('tweets.valid');
+
+
+it('should return TwitterResponse with errors if Twitter provides them', function (string $content) {
+    // Create a post with an account
+    $post = Post::factory()
+        ->withAccount(TwitterAccount::class)
+        ->state(compact('content'))
+        ->create();
+
+    $response = (object) [
+        "errors" => [
+            (object) [
+                'message' => 'An error',
+            ]
+        ]
+    ];
+
+    // Mock the TwitterOauth & Twitter Parser libraries and assert their use
+    $this->app->instance(
+        TwitterOAuth::class,
+        mock(TwitterOAuth::class)
+            ->shouldReceive('setOauthToken')
+            ->with('token', 'secret')
+            ->andReturn(null)
+            ->shouldReceive('post')
+            ->with('statuses/update', [
+                'status'  => $post->getContent(),
+            ])
+            ->andReturn($response)
+            ->getMock()
+    );
+
+    $this->app->instance(
+        Parser::class,
+        mock(Parser::class)
+            ->shouldReceive('validatePost')
+            ->with($post)
+            ->andReturn(true)
+    );
+
+    $subject = $post->account->getProvider()->publishPost($post);
+
+    expect($subject)->toBeInstanceOf(TwitterResponse::class);
+    expect($subject->id())->toBeNull();
+    expect($subject->sent())->toBeBool()->toBeFalse();
+    expect($subject->error())->toEqual('An error');
+    expect($subject->raw())->toBeObject()->toEqual($response);
+})->with('tweets.valid');
 
 /**
  * getDestinations(string $keyword, int $count = 5): array

@@ -125,12 +125,11 @@ class TwitterAccount implements AccountInterface
         // @TODO: Do we need a media upload as a DM
 
         // Post the status update to Twitter
-        $response = $this->twitter->post("statuses/update", [
-            "status" => $post->getContent(),
-        ]);
-
-        // @TODO: Actually put response in this interface
-        return new TwitterResponse([]);
+        return new TwitterResponse(
+            $this->twitter->post("statuses/update", [
+                "status" => $post->getContent(),
+            ])
+        );
     }
 
     public function getDestinations(string $keyword, int $count = 5): array
